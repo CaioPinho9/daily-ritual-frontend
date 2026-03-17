@@ -7,7 +7,7 @@ import { ProtectedRoute } from './routes/ProtectedRoute'
 import { LoginPage } from './pages/LoginPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { SignupPage } from './pages/SignupPage'
-import { ThemeProvider } from './theme.tsx'
+import { ThemeProvider } from './components/ThemeProvider'
 
 export default function App() {
   return (

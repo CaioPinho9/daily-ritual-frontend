@@ -1,4 +1,4 @@
-import { useTheme } from '../theme.tsx'
+import { useTheme } from '../theme'
 
 function SunIcon() {
   return (
