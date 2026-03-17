@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+/* ─── Light theme (default) ──────────────────────────────────────────────── */
+:root {
+  --color-bg:             #f5f4f1;
+  --color-surface:        #ffffff;
+  --color-surface-raised: #f0eeea;
+  --color-surface-hover:  #e8e5df;
+  --color-border:         rgb(30 28 24 / 0.09);
+  --color-border-strong:  rgb(30 28 24 / 0.18);
+  --color-ink:            #1a1916;
+  --color-ink-soft:       #5a5750;
+  --color-ink-muted:      #9a948a;
+  --color-accent:         #d95f2b;
+  --color-accent-dim:     rgb(217 95 43 / 0.14);
+  --color-accent-glow:    rgb(217 95 43 / 0.24);
+  --color-danger:         #c0392b;
+  --color-danger-dim:     rgb(192 57 43 / 0.09);
+  --color-success:        #1a7f4b;
+  --color-success-dim:    rgb(26 127 75 / 0.09);
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', 'SFMono-Regular', monospace;
+  --radius-sm:    0.5rem;
+  --radius-md:    0.875rem;
+  --radius-lg:    1.25rem;
+  --radius-xl:    1.75rem;
+
+  color:            var(--color-ink-soft);
+  background:       var(--color-bg);
+  font-family:      var(--font-body);
+  font-synthesis:   none;
+  text-rendering:   optimizeLegibility;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ─── Dark theme ─────────────────────────────────────────────────────────── */
+html.dark {
+  --color-bg:             #0d0f14;
+  --color-surface:        #141720;
+  --color-surface-raised: #1c2030;
+  --color-surface-hover:  #222740;
+  --color-border:         rgb(255 255 255 / 0.07);
+  --color-border-strong:  rgb(255 255 255 / 0.14);
+  --color-ink:            #f0f2f7;
+  --color-ink-soft:       #7c839e;
+  --color-ink-muted:      #454d66;
+  --color-accent:         #e06830;
+  --color-accent-dim:     rgb(224 104 48 / 0.14);
+  --color-accent-glow:    rgb(224 104 48 / 0.22);
+  --color-danger:         #ff6b6b;
+  --color-danger-dim:     rgb(255 107 107 / 0.10);
+  --color-success:        #4ade80;
+  --color-success-dim:    rgb(74 222 128 / 0.10);
+}
+
+/* ─── Reset & base ───────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+button, input, textarea, select { font: inherit; }
+
+button { appearance: none; }
+
+#root { min-height: 100svh; }
+
+h1, h2, h3, p { margin: 0; }
+
+h1, h2, h3 {
+  color:       var(--color-ink);
+  font-family: var(--font-display);
+  line-height: 1.05;
+}
+
+h1 {
+  font-size:      clamp(2.6rem, 5vw, 4.5rem);
+  font-weight:    900;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size:   clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+}
+
+p, li { font-size: 1rem; }
+
+code { font-family: var(--font-mono); }
+
+/* ─── Daily Ritual tokens (LoginPage) ───────────────────────────────────── */
+:root {
+  --dr-bg-base:           #f4f6f5;
+  --dr-bg-left:           #edf0ee;
+  --dr-bg-right:          #f9faf9;
+  --dr-bg-card:           #e4eae7;
+  --dr-bg-input:          #ffffff;
+  --dr-border-default:    #c8d4cf;
+  --dr-border-divider:    #d4ddd9;
+  --dr-accent:            #1db88d;
+  --dr-accent-hover:      #18a67e;
+  --dr-on-accent:         #ffffff;
+  --dr-text-primary:      #0f1f1a;
+  --dr-text-secondary:    #4a6659;
+  --dr-text-muted:        #6b8278;
+  --dr-text-faint:        #8aa09a;
+  --dr-text-placeholder:  #a0b8b0;
+  --dr-text-label:        #5a7a70;
+}
+
+html.dark {
+  --dr-bg-base:           #0e1113;
+  --dr-bg-left:           #121618;
+  --dr-bg-right:          #0b0e10;
+  --dr-bg-card:           #181d20;
+  --dr-bg-input:          #181d20;
+  --dr-border-default:    #252d30;
+  --dr-border-divider:    #1e2528;
+  --dr-accent:            #3ddbb0;
+  --dr-accent-hover:      #5ae4be;
+  --dr-on-accent:         #071a14;
+  --dr-text-primary:      #eaefec;
+  --dr-text-secondary:    #7a8f88;
+  --dr-text-muted:        #607068;
+  --dr-text-faint:        #4a5850;
+  --dr-text-placeholder:  #384540;
+  --dr-text-label:        #8aa099;
+}
