@@ -24,6 +24,13 @@
   border-right: 1px solid var(--color-border);
 }
 
+.app-shell__theme-switch {
+  position: absolute;
+  top: clamp(1.25rem, 3vw, 2rem);
+  right: clamp(1.25rem, 3vw, 2rem);
+  z-index: 2;
+}
+
 /* Light: warm ambient glow. Dark: restrained blue-slate glow. Both use opacity
    so a single rule works — the surface colour underneath does the heavy lifting. */
 .app-shell__hero::before {
@@ -332,6 +339,53 @@
   opacity: 0.5;
 }
 
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+  color: var(--color-ink);
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-surface-raised) 92%, transparent);
+  outline: none;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.theme-toggle__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--color-accent);
+}
+
+.theme-toggle__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.theme-toggle__text {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 /* ─── Card Footer ─── */
 
 .auth-card__footer {
@@ -376,6 +430,12 @@
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--color-border);
+}
+
+.profile-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .profile-topbar__brand span {
@@ -540,7 +600,7 @@
   .app-shell__hero {
     order: 2;
     min-height: auto;
-    padding: 2rem 1.5rem 2.5rem;
+    padding: 5rem 1.5rem 2.5rem;
     border-right: none;
     border-top: 1px solid var(--color-border);
   }
@@ -560,8 +620,14 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .profile-topbar {
-    align-items: flex-start;
+  .profile-topbar,
+  .profile-topbar__actions {
+    align-items: stretch;
     flex-direction: column;
+  }
+
+  .theme-toggle,
+  .button-secondary {
+    width: 100%;
   }
 }

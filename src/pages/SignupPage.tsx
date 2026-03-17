@@ -44,7 +44,7 @@ export function SignupPage() {
 
   return (
     <AuthLayout
-      eyebrow="daily-ritual"
+      eyebrow="Daily Ritual"
       title="Start building a study rhythm that lasts."
       description="Create your account to organize routines, protect your progress, and keep your learning space ready whenever you return."
       footer={

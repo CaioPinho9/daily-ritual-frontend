@@ -62,7 +62,7 @@ export function LoginPage() {
 
   return (
     <AuthLayout
-      eyebrow="daily-ritual"
+      eyebrow="Daily Ritual"
       title="Come back to the plan and keep moving."
       description="Sign in to continue building steady study habits, reviewing progress, and keeping your next session within reach."
       footer={

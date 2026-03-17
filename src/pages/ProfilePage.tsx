@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 import { useAuth } from '../auth/useAuth'
+import { ThemeToggle } from '../components/ThemeToggle'
 
 export function ProfilePage() {
   const { user, logout } = useAuth()
@@ -28,17 +29,20 @@ export function ProfilePage() {
       <div className="profile-shell">
         <header className="profile-topbar">
           <div className="profile-topbar__brand">
-            <span>daily-ritual</span>
+            <span>Daily Ritual</span>
             <strong>Your profile</strong>
           </div>
-          <button
-            className="button-secondary"
-            type="button"
-            onClick={handleLogout}
-            disabled={isLoggingOut}
-          >
-            {isLoggingOut ? 'Signing out...' : 'Logout'}
-          </button>
+          <div className="profile-topbar__actions">
+            <ThemeToggle />
+            <button
+              className="button-secondary"
+              type="button"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+            >
+              {isLoggingOut ? 'Signing out...' : 'Logout'}
+            </button>
+          </div>
         </header>
 
         <section className="profile-hero">

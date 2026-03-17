@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import type { ReactNode } from 'react'
 
+import { ThemeToggle } from './ThemeToggle'
+
 type AuthLayoutProps = {
   eyebrow: string
   title: string
@@ -19,6 +21,9 @@ export function AuthLayout({
   return (
     <div className="app-shell">
       <section className="app-shell__hero">
+        <div className="app-shell__theme-switch">
+          <ThemeToggle />
+        </div>
         <div className="app-shell__hero-panel">
           <div className="app-shell__eyebrow">{eyebrow}</div>
           <h1>{title}</h1>
@@ -49,7 +54,7 @@ export function AuthLayout({
         <div className="auth-card">
           <div className="auth-card__header">
             <Link className="app-shell__eyebrow" to="/">
-              daily-ritual
+              Daily Ritual
             </Link>
             {children}
           </div>
