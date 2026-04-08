@@ -7,7 +7,7 @@ RUN npm install
 COPY daily-ritual-frontend/ ./
 
 ARG VITE_API_URL=http://localhost:8080
-ARG VITE_PLAN_API_URL=http://localhost:8081
+ARG VITE_PLAN_API_URL=http://localhost:8082
 ARG VITE_SESSION_API_URL=http://localhost:8082
 ARG VITE_PROGRESS_API_URL=http://localhost:8083
 ARG VITE_SCHEDULER_API_URL=http://localhost:8084
