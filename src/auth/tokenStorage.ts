@@ -1,13 +1,13 @@
-const ACCESS_TOKEN_KEY = 'daily-ritual.access-token'
+let accessToken: string | null = null
 
 export const tokenStorage = {
   get(): string | null {
-    return window.localStorage.getItem(ACCESS_TOKEN_KEY)
+    return accessToken
   },
   set(token: string) {
-    window.localStorage.setItem(ACCESS_TOKEN_KEY, token)
+    accessToken = token
   },
   clear() {
-    window.localStorage.removeItem(ACCESS_TOKEN_KEY)
+    accessToken = null
   },
 }

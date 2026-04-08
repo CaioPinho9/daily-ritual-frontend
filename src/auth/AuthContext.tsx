@@ -27,6 +27,7 @@ export type AuthContextValue = {
   signup: (payload: SignupPayload) => Promise<void>
   logout: () => Promise<void>
   getValidAccessToken: () => Promise<string | null>
+  fetchWithAuth: (input: string, init?: RequestInit) => Promise<Response>
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -149,6 +150,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return refreshAccessToken()
   }, [refreshAccessToken])
 
+  const fetchWithAuth = useCallback(
+    async (input: string, init: RequestInit = {}) => {
+      const execute = async (token: string | null) => {
+        const headers = new Headers(init.headers)
+        if (token) {
+          headers.set('Authorization', `Bearer ${token}`)
+        }
+
+        return fetch(input, {
+          ...init,
+          headers,
+          credentials: 'include',
+        })
+      }
+
+      let token = await getValidAccessToken()
+      let response = await execute(token)
+
+      if (response.status !== 401) {
+        return response
+      }
+
+      tokenStorage.clear()
+      token = await refreshAccessToken()
+      if (!token) {
+        clearSession()
+        return response
+      }
+
+      response = await execute(token)
+      if (response.status === 401) {
+        clearSession()
+      }
+
+      return response
+    },
+    [clearSession, getValidAccessToken, refreshAccessToken],
+  )
+
   return (
     <AuthContext.Provider
       value={{
@@ -159,6 +199,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signup,
         logout,
         getValidAccessToken,
+        fetchWithAuth,
       }}
     >
       {children}
