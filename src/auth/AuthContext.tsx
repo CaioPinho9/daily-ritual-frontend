@@ -17,12 +17,13 @@ import {
 } from './api'
 import { AuthContext } from './authContextValue'
 import { tokenStorage } from './tokenStorage'
-import type { AuthStatus, LoginPayload, SignupPayload, User } from './types'
+import type { AuthStatus, LoginPayload, SessionEndReason, SignupPayload, User } from './types'
 
 export type AuthContextValue = {
   status: AuthStatus
   user: User | null
   isAuthenticated: boolean
+  sessionEndReason: SessionEndReason
   login: (payload: LoginPayload) => Promise<void>
   signup: (payload: SignupPayload) => Promise<void>
   logout: () => Promise<void>
@@ -33,6 +34,7 @@ export type AuthContextValue = {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>('loading')
   const [user, setUser] = useState<User | null>(null)
+  const [sessionEndReason, setSessionEndReason] = useState<SessionEndReason>(null)
   const refreshInFlight = useRef<Promise<string | null> | null>(null)
 
   const setAuthenticatedSession = useCallback((accessToken: string, nextUser: User) => {
@@ -40,14 +42,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     startTransition(() => {
       setUser(nextUser)
       setStatus('authenticated')
+      setSessionEndReason(null)
     })
   }, [])
 
-  const clearSession = useCallback(() => {
+  const clearSession = useCallback((reason: SessionEndReason = null) => {
     tokenStorage.clear()
     startTransition(() => {
       setUser(null)
       setStatus('unauthenticated')
+      setSessionEndReason(reason)
     })
   }, [])
 
@@ -77,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!existingToken) {
         const refreshedToken = await refreshAccessToken()
         if (!refreshedToken) {
-          clearSession()
+          clearSession('expired')
           return
         }
 
@@ -96,7 +100,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         const refreshedToken = await refreshAccessToken()
         if (!refreshedToken) {
-          clearSession()
+          clearSession('expired')
           return
         }
 
@@ -109,7 +113,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     void resolveProfile().catch(() => {
-      clearSession()
+      clearSession('expired')
     })
   }, [clearSession, resolveProfile])
 
@@ -137,7 +141,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await logoutRequest()
     } finally {
-      clearSession()
+      clearSession(null)
     }
   }, [clearSession])
 
@@ -175,13 +179,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       tokenStorage.clear()
       token = await refreshAccessToken()
       if (!token) {
-        clearSession()
+        clearSession('expired')
         return response
       }
 
       response = await execute(token)
       if (response.status === 401) {
-        clearSession()
+        clearSession('expired')
       }
 
       return response
@@ -195,6 +199,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         status,
         user,
         isAuthenticated: status === 'authenticated',
+        sessionEndReason,
         login,
         signup,
         logout,

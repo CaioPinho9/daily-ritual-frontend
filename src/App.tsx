@@ -4,9 +4,7 @@ import './App.css'
 import { AuthProvider } from './auth/AuthContext'
 import { GuestRoute } from './routes/GuestRoute'
 import { ProtectedRoute } from './routes/ProtectedRoute'
-import { DashboardPage } from './pages/DashboardPage'
 import { LoginPage } from './pages/LoginPage'
-import { NotificationsPage } from './pages/NotificationsPage'
 import { PlansPage } from './pages/PlansPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { SessionsPage } from './pages/SessionsPage'
@@ -18,7 +16,7 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/plans" replace />} />
           <Route
             path="/login"
             element={
@@ -39,7 +37,7 @@ export default function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <DashboardPage />
+                <Navigate to="/plans" replace />
               </ProtectedRoute>
             }
           />
@@ -60,14 +58,6 @@ export default function App() {
             }
           />
           <Route
-            path="/notifications"
-            element={
-              <ProtectedRoute>
-                <NotificationsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/profile"
             element={
               <ProtectedRoute>
@@ -75,7 +65,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/plans" replace />} />
         </Routes>
       </AuthProvider>
     </ThemeProvider>

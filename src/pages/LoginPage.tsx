@@ -39,7 +39,13 @@ export function LoginPage() {
     'from' in location.state &&
     typeof location.state.from === 'string'
       ? location.state.from
-      : '/profile'
+      : '/plans'
+
+  const sessionExpired =
+    typeof location.state === 'object' &&
+    location.state !== null &&
+    'sessionExpired' in location.state &&
+    location.state.sessionExpired === true
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -77,6 +83,12 @@ export function LoginPage() {
       </div>
 
       <form className="auth-form" onSubmit={handleSubmit}>
+        {sessionExpired ? (
+          <div className="auth-form__alert">
+            Your session expired while saving. Please sign in again and retry.
+          </div>
+        ) : null}
+
         <div className="auth-form__field">
           <label htmlFor="email">Email</label>
           <input

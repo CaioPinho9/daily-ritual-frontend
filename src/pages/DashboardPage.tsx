@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react'
 import { ApiError } from '../auth/api'
 import { AppLayout } from '../components/AppLayout'
 import { serviceUrls } from '../services/config'
-import type { Dashboard, PlanProgress } from '../services/types'
+import type { Dashboard, Plan, PlanProgress } from '../services/types'
 import { useServiceClient } from '../services/useServiceClient'
 
 export function DashboardPage() {
   const request = useServiceClient()
   const [dashboard, setDashboard] = useState<Dashboard | null>(null)
-  const [planId, setPlanId] = useState('1')
+  const [plans, setPlans] = useState<Plan[]>([])
+  const [planId, setPlanId] = useState('')
   const [planProgress, setPlanProgress] = useState<PlanProgress | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -18,6 +19,19 @@ export function DashboardPage() {
       .then(setDashboard)
       .catch((err) => {
         setError(err instanceof ApiError ? err.message : 'Unable to load dashboard.')
+      })
+  }, [request])
+
+  useEffect(() => {
+    void request<Plan[]>(`${serviceUrls.plan}/plans`)
+      .then((data) => {
+        setPlans(data)
+        if (data.length > 0) {
+          setPlanId(String(data[0].id))
+        }
+      })
+      .catch(() => {
+        // The page-level error remains driven by the current explicit action.
       })
   }, [request])
 
@@ -51,11 +65,18 @@ export function DashboardPage() {
       </section>
       <section className="workspace-card">
         <span className="workspace-card__label">Per-plan progress</span>
-        <h2>Lookup by plan id</h2>
+        <h2>Lookup by plan</h2>
         <div className="auth-form">
           <div className="auth-form__field">
-            <label htmlFor="progress-plan-id">Plan id</label>
-            <input id="progress-plan-id" value={planId} onChange={(event) => setPlanId(event.target.value)} />
+            <label htmlFor="progress-plan-id">Plan</label>
+            <select id="progress-plan-id" value={planId} onChange={(event) => setPlanId(event.target.value)}>
+              <option value="" disabled>Select a plan</option>
+              {plans.map((plan) => (
+                <option key={plan.id} value={plan.id}>
+                  {plan.title}
+                </option>
+              ))}
+            </select>
           </div>
           <button className="button-primary" type="button" onClick={() => void loadPlanProgress()}>
             Load progress

@@ -5,10 +5,7 @@ import { useAuth } from '../auth/useAuth'
 import { ThemeToggle } from './ThemeToggle'
 
 const links = [
-  { to: '/dashboard', label: 'Dashboard' },
   { to: '/plans', label: 'Plans' },
-  { to: '/sessions', label: 'Sessions' },
-  { to: '/notifications', label: 'Notifications' },
   { to: '/profile', label: 'Profile' },
 ]
 
@@ -17,8 +14,8 @@ export function AppLayout({
   description,
   children,
 }: {
-  title: string
-  description: string
+  title?: string
+  description?: string
   children: ReactNode
 }) {
   const { user, logout } = useAuth()
@@ -66,11 +63,13 @@ export function AppLayout({
       </aside>
 
       <section className="workspace-content">
-        <header className="workspace-hero">
-          <span className="workspace-hero__eyebrow">Study planner / habit tracker</span>
-          <h1>{title}</h1>
-          <p>{description}</p>
-        </header>
+        {title ? (
+          <header className="workspace-hero">
+            <span className="workspace-hero__eyebrow">Daily Routine</span>
+            <h1>{title}</h1>
+            {description ? <p>{description}</p> : null}
+          </header>
+        ) : null}
         {children}
       </section>
     </main>

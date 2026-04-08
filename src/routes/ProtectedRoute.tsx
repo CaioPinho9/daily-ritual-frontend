@@ -18,7 +18,7 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
   }
 
   if (!auth.isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />
+    return <Navigate to="/login" replace state={{ from: location.pathname, sessionExpired: auth.sessionEndReason === 'expired' }} />
   }
 
   return <>{children}</>

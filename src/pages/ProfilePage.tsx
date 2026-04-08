@@ -17,18 +17,11 @@ export function ProfilePage() {
         <article className="workspace-card">
           <span className="workspace-card__label">Identity</span>
             <h1>{user.name}</h1>
-            <p>
-            This is the authenticated profile returned by `daily-ritual-auth` through `/users/me`.
-            </p>
 
             <div className="workspace-stats">
               <div className="workspace-stat">
                 <span className="workspace-card__label">Email</span>
                 <strong>{user.email}</strong>
-              </div>
-              <div className="workspace-stat">
-                <span className="workspace-card__label">User Id</span>
-                <strong>#{user.id}</strong>
               </div>
             </div>
           </article>

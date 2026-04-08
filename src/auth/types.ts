@@ -1,5 +1,7 @@
 export type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated'
 
+export type SessionEndReason = 'expired' | null
+
 export type User = {
   id: number
   name: string
